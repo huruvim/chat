@@ -1,0 +1,26 @@
+.general {
+  background-color: #fffbee;
+  min-width: 100vw;
+  min-height: 100vh;
+  padding: 20px;
+  .chat {
+    padding: 40px;
+    margin: 20px;
+    border: 1px solid #00a7cf;
+    height: calc(100vh - 80px);
+    width: calc(100% - 80px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    & > :first-child {
+      border: #8a9c5a 1px solid;
+      height: calc(100% - 90px);
+    }
+
+    & > :last-child {
+      border: #077186 1px solid;
+      height: 90px;
+    }
+  }
+}

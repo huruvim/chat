@@ -1,0 +1,42 @@
+@mixin flex($flex-direction, $justify-content, $align-items, $flex-wrap) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  flex-wrap: $flex-wrap;
+}
+
+@mixin inlineFlex($flex-direction, $justify-content, $align-items, $flex-wrap) {
+  display: inline-flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  flex-wrap: $flex-wrap;
+}
+
+@mixin ulReset() {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin btnReset() {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+@mixin inputReset() {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+@mixin activeLink() {
+  color: #0879ff;
+  &:hover {
+    cursor: pointer;
+    color: #52a2ff;
+    transition: color 0.35s linear;
+  }
+}
