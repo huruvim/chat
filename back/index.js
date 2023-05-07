@@ -17,41 +17,70 @@ app.use(cors());
 app.use(express.json());
 
 const messages = [];
-const usersState = [];
+let usersState = [];
 let usersTyping = [];
 
 io.on('connection', (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
 
-  socket.on('message', (data) => {
-    console.log(data);
+  // no user, but user creation is here
+  socket.on('client-set-user', (title) => {
+    const newTitle = title.trim();
+    if (newTitle) {
+      if (usersState.some(user => user.name === newTitle)) {
+        usersState = usersState.map(user => user.name === newTitle ? { ...user, sessionId: socket.id } : user);
+        socket.emit('server-set-user', usersState.find(user => user.name === newTitle))
+      } else {
+        const newUser = { name: newTitle, id: uuid.v4(), sessionId: socket.id };
+        usersState.push(newUser);
+        socket.emit('server-set-user', newUser)
+      }
+    } else {
+      socket.emit('server-set-user', 'Title was not provided')
+    }
   });
 
+  // with user
   socket.on("client-message-sent", (message) => {
+    console.log(message);
     const receivedMessage = JSON.parse(message);
     if (receivedMessage?.text && receivedMessage?.userId) {
       const user = usersState.find(user => user.id === receivedMessage.userId);
       if (user) {
+        console.log(7777);
+        usersState = usersState.map(user => user.id === receivedMessage.userId ? { ...user, sessionId: socket.id } : user);
         const newMessage = { text: receivedMessage.text, id: uuid.v4(), user };
         messages.push(newMessage);
         io.emit('server-message-received', newMessage);
       }
     }
   })
+
+  // with user
   socket.on("client-started-typing", (userId) => {
     if (usersTyping.indexOf(userId) < 0) {
+      usersState = usersState.map(user => user.id === userId ? { ...user, sessionId: socket.id } : user);
       usersTyping.push(userId);
       socket.broadcast.emit('server-user-typing', usersState.find(user => user.id === userId));
     }
   })
+
+  // with user
   socket.on("client-stopped-typing", (userId) => {
+    usersState = usersState.map(user => user.id === userId ? { ...user, sessionId: socket.id } : user);
     if (usersTyping.indexOf(userId) >= 0) {
       usersTyping = usersTyping.filter(user => user !== userId);
       socket.broadcast.emit('server-user-stopped-typing', userId);
     }
   })
 
+  // with user
   socket.on('disconnect', () => {
+    const disconnectedUser = usersState.find(user => user.sessionId === socket.id);
+    if (disconnectedUser) {
+      usersTyping = usersTyping.filter(user => user !== disconnectedUser.id);
+      socket.broadcast.emit('server-user-stopped-typing', disconnectedUser.id);
+    }
     console.log('🔥: A user disconnected', socket.id);
   });
 });

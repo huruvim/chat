@@ -2,7 +2,6 @@ import Message from "../Message/Message";
 import s from './MessageList.module.scss';
 import {FC} from "react";
 import {useSelector} from "react-redux";
-import {RootState} from "../../redux/store";
 import { MessageI } from "../../shapes";
 import {currentUserSelector} from "../../redux/selectors";
 

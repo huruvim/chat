@@ -1,40 +1,44 @@
 import s from './Chat.module.scss';
 import MessageInputs from "../MessageInputs/MessageInputs";
 import MessageList from "../MessageList/MessageList";
-import {useContext, useEffect} from "react";
+import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getMessages} from "../../redux/sagas/messengerSaga";
 import {useNavigate} from "react-router-dom";
 import {useChat} from "../../hooks/useChat";
-import {SocketContext} from "../../contexts";
 import {currentUserSelector, messagesSelector} from "../../redux/selectors";
+import {PATHS} from "../../constants/routes";
 
 const Chat = () => {
-  const {socket} = useContext(SocketContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const messages = useSelector(messagesSelector);
   const user = useSelector(currentUserSelector);
 
   useEffect(() => {
+    if (!user) {
+      navigate(PATHS.DEFAULT)
+    }
     dispatch(getMessages());
   }, [])
 
-  useChat();
-
-  const onSendClick = (value: string) => {
-    socket?.emit('client-message-sent', JSON.stringify({text: value, userId: user?.id}))
-  }
+  const {onSendClick, onStartTyping, onStopTyping} = useChat();
 
   if (!user) {
-    navigate('/')
+    return null;
   }
 
   return (
     <div className={s.general}>
       <div className={s.chat}>
         <MessageList messages={messages}/>
-        <MessageInputs handleSendClick={onSendClick}/>
+        <MessageInputs
+          handleSendClick={onSendClick}
+          handleStartTyping={onStartTyping}
+          handleStopTyping={onStopTyping}
+          userId={user.id}
+        />
       </div>
     </div>
   )

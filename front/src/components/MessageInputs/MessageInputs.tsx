@@ -1,42 +1,40 @@
 import s from './MessageInputs.module.scss';
 import Textarea from "../UI/Textarea/Textarea";
 import Button from "../UI/Button/Button";
-import React, {FC, useContext, useState} from "react";
-import {useSelector} from "react-redux";
+import React, {FC, useRef, useState} from "react";
 import UserTyping from "../UserTyping/UserTyping";
-import {SocketContext} from "../../contexts";
-import {currentUserSelector} from "../../redux/selectors";
 
 interface MessageInputsProps {
-  handleSendClick: (val: string) => void;
+  handleSendClick: (val: string, userId: string) => void;
+  handleStartTyping: (userId: string) => void;
+  handleStopTyping: (userId: string) => void;
+  userId: string;
 }
 
-const MessageInputs: FC<MessageInputsProps> = ({handleSendClick}) => {
-  const {socket} = useContext(SocketContext);
-  const [value, setValue] = useState('');
-  const currentUser = useSelector(currentUserSelector);
+const MessageInputs: FC<MessageInputsProps> = ({userId, handleSendClick, handleStartTyping, handleStopTyping}) => {
+  const [value, setValue] = useState('')
 
   const onSendClick = () => {
-    handleSendClick(value);
+    handleSendClick(value, userId);
+    handleStopTyping(userId);
     setValue('');
-    socket?.emit('client-stopped-typing', currentUser?.id);
   };
 
   const handleChange = (text: string) => {
     setValue(text);
     if (text) {
-      socket?.emit('client-started-typing', currentUser?.id);
+      handleStartTyping(userId);
     } else {
-      socket?.emit('client-stopped-typing', currentUser?.id);
+      handleStopTyping(userId);
     }
   };
 
   return (
     <>
-      <UserTyping />
+      <UserTyping/>
       <div className={s.messenger}>
-        <Textarea value={value} setValue={handleChange}/>
-        <Button title="Send" onClick={onSendClick} />
+        <Textarea handleChange={handleChange} value={value}/>
+        <Button title="Send" onClick={onSendClick}/>
       </div>
     </>
   )
