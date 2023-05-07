@@ -1,13 +1,14 @@
 import s from './Chat.module.scss';
 import MessageInputs from "../MessageInputs/MessageInputs";
 import MessageList from "../MessageList/MessageList";
-import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector, shallowEqual} from "react-redux";
 import {getMessages} from "../../redux/sagas/messengerSaga";
 import {useNavigate} from "react-router-dom";
 import {useChat} from "../../hooks/useChat";
-import {currentUserSelector, messagesSelector} from "../../redux/selectors";
+import {currentUserSelector, hasTypingUsersSelector, messagesSelector} from "../../redux/selectors";
 import {PATHS} from "../../constants/routes";
+import UserTyping from "../UserTyping/UserTyping";
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Chat = () => {
 
   const messages = useSelector(messagesSelector);
   const user = useSelector(currentUserSelector);
+  const hasTypingUsers = useSelector(hasTypingUsersSelector, shallowEqual);
 
   useEffect(() => {
     if (!user) {
@@ -31,15 +33,15 @@ const Chat = () => {
 
   return (
     <div className={s.general}>
-      <div className={s.chat}>
-        <MessageList messages={messages}/>
-        <MessageInputs
-          handleSendClick={onSendClick}
-          handleStartTyping={onStartTyping}
-          handleStopTyping={onStopTyping}
-          userId={user.id}
-        />
-      </div>
+      <div>Welcome to the chat {user?.name}</div>
+      <MessageList messages={messages}/>
+      {hasTypingUsers && <UserTyping/>}
+      <MessageInputs
+        handleSendClick={onSendClick}
+        handleStartTyping={onStartTyping}
+        handleStopTyping={onStopTyping}
+        userId={user.id}
+      />
     </div>
   )
 }

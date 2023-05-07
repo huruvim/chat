@@ -1,25 +1,36 @@
+@import 'src/assets/styles/mixins';
+
 .general {
-  background-color: #fffbee;
-  min-width: 100vw;
-  min-height: 100vh;
-  padding: 20px;
-  .chat {
-    padding: 40px;
-    margin: 20px;
-    border: 1px solid #00a7cf;
-    height: calc(100vh - 80px);
-    width: calc(100% - 80px);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  & > :first-child {
+    background-color: #53b8cc;
+    height: 40px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #3300ff;
+  }
 
+  & > :last-child {
+    height: 40px;
+  }
+
+  & > :nth-child(2) {
+    flex: 1;
+    height: 100%;
+    padding: 40px 0 40px;
+  }
+
+  @include lg {
+    margin: 20px;
+    border-right: 1px solid #077186;
+    border-left: 1px solid #077186;
+    border-radius: 16px;
+    height: calc(100vh - 40px);
     & > :first-child {
-      border: #8a9c5a 1px solid;
-      height: calc(100% - 90px);
-    }
-
-    & > :last-child {
-      border: #077186 1px solid;
-      height: 90px;
+      border-radius: 16px 16px 0 0;
     }
   }
 }

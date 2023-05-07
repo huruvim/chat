@@ -40,17 +40,25 @@ const Home = () => {
 
   const onSendTitle = (title: string) => {
     socket.emit('client-set-user', title);
-    socket.on('server-set-user', handleReceivedUser)
+    socket.on('server-set-user', handleReceivedUser);
   };
 
   const isAllowed = !!title.trim();
+
+  const onEnterClick = () => {
+    if (isAllowed) {
+      onSendTitle(title)
+    }
+  }
 
   return (
     <div className={s.general}>
       <div className={s.menu}>
         <span className={s.title}>Type your name</span>
         {error.length > 0 && <span className={s.error}>{error}</span>}
-        <Input value={title} onChange={setTitle} placeholder="Robert..."/>
+        <div className={s.input}>
+          <Input value={title} onChange={setTitle} placeholder="Robert..." onEnterClick={onEnterClick}/>
+        </div>
         <Button title="Send" isDisabled={!isAllowed} onClick={() => onSendTitle(title)}/>
       </div>
     </div>

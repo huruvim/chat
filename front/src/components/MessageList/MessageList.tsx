@@ -12,13 +12,9 @@ interface MessageListProps {
 const MessageList: FC<MessageListProps> = ({ messages }) => {
   const currentUser = useSelector(currentUserSelector)
   const messagesRef = useRef<Nullable<HTMLUListElement>>(null);
-  const scrollingRef = useRef(false);
 
   useEffect(() => {
-    if (messages.length > 0 && !scrollingRef.current) {
-      messagesRef.current?.scrollTo(0, messagesRef.current?.scrollHeight);
-      scrollingRef.current = true;
-    }
+    messagesRef.current?.scrollTo(0, messagesRef.current?.scrollHeight);
   }, [messages]);
 
   return (

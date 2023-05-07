@@ -1,53 +1,31 @@
-//.message {
-//  margin: 4px 2px;
-//  border-radius: 4px;
-//  padding: 4px;
-//  width: 45%;
-//  .messageContainer {
-//    border: 1px solid #d0ffc2;
-//    background-color: #ff640a;
-//  }
-//  .myMessage {
-//    align-self: flex-end;
-//    display: flex;
-//    justify-content: flex-end;
-//  }
-//  .author {
-//    margin: 20px 0 0;
-//  }
-//}
-//
-//.toRight {
-//  margin: 4px 2px;
-//  border-radius: 4px;
-//  padding: 4px;
-//  width: 45%;
-//  align-self: flex-end;
-//  background-color: #7dffe8;
-//  display: flex;
-//  justify-content: flex-end;
-//}
+@import 'src/assets/styles/mixins';
 
 .message {
   margin: 0 2px;
   border-radius: 4px;
   padding: 4px;
-  max-width: 45%;
+  max-width: 80%;
   width: max-content;
+  @include lg {
+    max-width: 45%;
+  }
   .messageContainer {
     border-radius: 8px;
-    background-color: #f69b76;
-    font-size: 18px;
+    background-color: #5ae68c;
+    font-size: 14px;
     padding: 0 8px;
     & > span {
       max-width: 100%;
       overflow-wrap: break-word;
     }
+    @include lg {
+      font-size: 22px;
+    }
   }
   .alignedMessage {
     display: flex;
     justify-content: flex-end;
-    background-color: #fdc7b4;
+    background-color: #c66aff;
   }
   .alignedAuthorMessage {
     display: flex;

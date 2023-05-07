@@ -7,12 +7,8 @@ interface TextareaProps {
 }
 
 const Textarea: FC<TextareaProps> = ({value, handleChange}) => {
-  const handleChangeValue = (text: string) => {
-    handleChange(text);
-  };
-
   return (
-    <textarea className={s.textarea} value={value} onChange={({target}) => handleChangeValue(target.value)}/>
+    <textarea className={s.textarea} value={value} onChange={({target}) => handleChange(target.value)}/>
   )
 }
 

@@ -1,8 +1,7 @@
 import s from './MessageInputs.module.scss';
-import Textarea from "../UI/Textarea/Textarea";
 import Button from "../UI/Button/Button";
-import React, {FC, useRef, useState} from "react";
-import UserTyping from "../UserTyping/UserTyping";
+import React, {FC, useState} from "react";
+import Input from "../UI/Input/Input";
 
 interface MessageInputsProps {
   handleSendClick: (val: string, userId: string) => void;
@@ -12,7 +11,7 @@ interface MessageInputsProps {
 }
 
 const MessageInputs: FC<MessageInputsProps> = ({userId, handleSendClick, handleStartTyping, handleStopTyping}) => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState('');
 
   const onSendClick = () => {
     handleSendClick(value, userId);
@@ -29,14 +28,17 @@ const MessageInputs: FC<MessageInputsProps> = ({userId, handleSendClick, handleS
     }
   };
 
+  const handleEnterClick = () => {
+    if (value.trim()) {
+      onSendClick();
+    }
+  };
+
   return (
-    <>
-      <UserTyping/>
-      <div className={s.messenger}>
-        <Textarea handleChange={handleChange} value={value}/>
-        <Button title="Send" onClick={onSendClick}/>
-      </div>
-    </>
+    <div className={s.messenger}>
+      <Input value={value} onChange={handleChange} onEnterClick={handleEnterClick}/>
+      <Button title="Send" isDisabled={!value.trim()} onClick={onSendClick}/>
+    </div>
   )
 }
 
