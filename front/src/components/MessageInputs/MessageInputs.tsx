@@ -1,6 +1,6 @@
 import s from './MessageInputs.module.scss';
 import Button from "../UI/Button/Button";
-import React, {FC, useState} from "react";
+import React, {FC, memo, useState} from "react";
 import Input from "../UI/Input/Input";
 
 interface MessageInputsProps {
@@ -42,4 +42,4 @@ const MessageInputs: FC<MessageInputsProps> = ({userId, handleSendClick, handleS
   )
 }
 
-export default MessageInputs;
+export default memo(MessageInputs);

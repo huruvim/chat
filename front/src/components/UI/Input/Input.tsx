@@ -5,10 +5,10 @@ interface InputProps {
   value: string;
   placeholder?: string;
   onChange: (value: string) => void;
-  onEnterClick?: () => void;
+  onEnterClick: () => void;
 }
 
-const Input: FC<InputProps> = ({value, onChange, placeholder = '', onEnterClick = () => null}) => {
+const Input: FC<InputProps> = ({value, onChange, onEnterClick, placeholder = ''}) => {
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       onEnterClick();
@@ -16,7 +16,7 @@ const Input: FC<InputProps> = ({value, onChange, placeholder = '', onEnterClick 
   };
 
   return (
-    <input type="text" className={s.input} value={value} placeholder={placeholder} onChange={({target}) => onChange(target.value)} onKeyDown={onKeyDown}/>
+    <input type="text" autoFocus className={s.input} value={value} placeholder={placeholder} onChange={({target}) => onChange(target.value)} onKeyDown={onKeyDown}/>
   )
 }
 

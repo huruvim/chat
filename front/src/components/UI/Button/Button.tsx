@@ -1,4 +1,4 @@
-import React, {FC, MouseEventHandler, KeyboardEventHandler} from "react";
+import React, {FC} from "react";
 import s from './Button.module.scss';
 
 interface ButtonProps {

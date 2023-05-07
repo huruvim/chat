@@ -60,7 +60,7 @@ img {
 
 a {
   text-decoration: none;
-  transition: color $timeFast ease-in-out;
+  transition: color 0.15s ease-in-out;
 
   &:focus {
     outline: 0;

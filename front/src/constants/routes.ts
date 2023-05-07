@@ -1,5 +1,5 @@
-import Home from "../components/Home/Home";
-import Chat from "../components/Chat/Chat";
+import Home from "../routes/Home/Home";
+import Chat from "../routes/Chat/Chat";
 
 export const PATHS = {
   DEFAULT: '/',

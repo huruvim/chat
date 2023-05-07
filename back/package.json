@@ -2,8 +2,9 @@
   "name": "socket-chat",
   "version": "0.0.1",
   "description": "my first socket.io app",
+  "main": "index.js",
   "scripts": {
-    "watch": ""
+    "start": "node index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -13,5 +14,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": "16.14.2"
   }
 }

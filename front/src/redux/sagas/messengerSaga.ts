@@ -3,10 +3,11 @@ import {createAction} from "@reduxjs/toolkit";
 import {getMessagesApi, setUserApi} from "../../constants/api";
 import {setCurrentUser, setMessages} from "../slices/messangerSlice";
 import {currentUserSelector} from "../selectors";
+import {User} from "../../shapes";
 
-function* initializeWorker(): Generator<StrictEffect<string>, void, any> {
+function* initializeWorker() {
   try {
-    const currentUser = yield select(currentUserSelector);
+    const currentUser: User = yield select(currentUserSelector);
     if (currentUser.name) {
       const { data } = yield call(setUserApi, currentUser.name);
       yield put(setCurrentUser(data));

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import Router from "./components/Router";
+import Router from "./utils/Router";
 import {useConnector} from "./hooks/useConnector";
 import {useDispatch} from "react-redux";
 import {initialize} from "./redux/sagas/messengerSaga";
