@@ -2,14 +2,11 @@ import {ForkEffect, takeLatest, select, put, call, StrictEffect} from "redux-sag
 import {createAction} from "@reduxjs/toolkit";
 import {getMessagesApi, setUserApi} from "../../constants/api";
 import {setCurrentUser, setMessages} from "../slices/messangerSlice";
-import {RootState} from "../store";
-import {User} from "../../components/Chat/Chat";
-
-const getUser = (state: RootState): User | null => state.messenger.currentUser;
+import {currentUserSelector} from "../selectors";
 
 function* initializeWorker(): Generator<StrictEffect<string>, void, any> {
   try {
-    const currentUser = yield select(getUser);
+    const currentUser = yield select(currentUserSelector);
     if (currentUser.name) {
       const { data } = yield call(setUserApi, currentUser.name);
       yield put(setCurrentUser(data));

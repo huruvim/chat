@@ -15,7 +15,8 @@ const store = configureStore({
   preloadedState: {
     messenger: {
       messages: [],
-      currentUser: parsedCurrentUser
+      usersTyping: [],
+      currentUser: parsedCurrentUser,
     }
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false, serializableCheck: false }).prepend(middlewares),

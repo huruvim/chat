@@ -18,6 +18,7 @@ app.use(express.json());
 
 const messages = [];
 const usersState = [];
+let usersTyping = [];
 
 io.on('connection', (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
@@ -37,9 +38,21 @@ io.on('connection', (socket) => {
       }
     }
   })
+  socket.on("client-started-typing", (userId) => {
+    if (usersTyping.indexOf(userId) < 0) {
+      usersTyping.push(userId);
+      socket.broadcast.emit('server-user-typing', usersState.find(user => user.id === userId));
+    }
+  })
+  socket.on("client-stopped-typing", (userId) => {
+    if (usersTyping.indexOf(userId) >= 0) {
+      usersTyping = usersTyping.filter(user => user !== userId);
+      socket.broadcast.emit('server-user-stopped-typing', userId);
+    }
+  })
 
   socket.on('disconnect', () => {
-    console.log('🔥: A user disconnected');
+    console.log('🔥: A user disconnected', socket.id);
   });
 });
 

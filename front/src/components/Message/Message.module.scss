@@ -1,12 +1,60 @@
+//.message {
+//  margin: 4px 2px;
+//  border-radius: 4px;
+//  padding: 4px;
+//  width: 45%;
+//  .messageContainer {
+//    border: 1px solid #d0ffc2;
+//    background-color: #ff640a;
+//  }
+//  .myMessage {
+//    align-self: flex-end;
+//    display: flex;
+//    justify-content: flex-end;
+//  }
+//  .author {
+//    margin: 20px 0 0;
+//  }
+//}
+//
+//.toRight {
+//  margin: 4px 2px;
+//  border-radius: 4px;
+//  padding: 4px;
+//  width: 45%;
+//  align-self: flex-end;
+//  background-color: #7dffe8;
+//  display: flex;
+//  justify-content: flex-end;
+//}
+
 .message {
-  margin: 4px 0 4px 2px;
-  border: 1px solid #d0ffc2;
-  background-color: #ff640a;
+  margin: 0 2px;
   border-radius: 4px;
   padding: 4px;
   width: 45%;
+  .messageContainer {
+    border-radius: 8px;
+    background-color: #f69b76;
+    font-size: 18px;
+    padding: 0 8px;
+  }
+  .alignedMessage {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #fdc7b4;
+  }
+  .alignedAuthorMessage {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .author {
+    display: flex;
+    font-size: 12px;
+    font-family: 'Exo 2', sans-serif;
+  }
 }
 
-.toRight {
+.myMessage {
   align-self: flex-end;
 }

@@ -1,25 +1,27 @@
-import React, {createContext, useEffect} from 'react';
-import {Socket} from 'socket.io-client';
+import React, {useEffect} from 'react';
 import Router from "./components/Router";
 import {useConnector} from "./hooks/useConnector";
 import {useDispatch} from "react-redux";
 import {initialize} from "./redux/sagas/messengerSaga";
-
-type SocketI = { socket: Socket | null }
-
-export const SocketContext = createContext<SocketI>({socket: null});
+import {SocketContext} from "./contexts";
 
 function App() {
   const socket = useConnector();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initialize());
-  }, [])
+    if (socket) {
+      dispatch(initialize());
+    }
+  }, [socket])
+
+  if (!socket) {
+    return <div>Loading...</div>
+  }
 
   return (
     <SocketContext.Provider value={{socket}}>
-      {socket ? <Router/> : <div>Loading...</div>}
+      <Router/>
     </SocketContext.Provider>
   )
 }
