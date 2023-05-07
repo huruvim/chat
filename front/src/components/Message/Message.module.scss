@@ -32,12 +32,17 @@
   margin: 0 2px;
   border-radius: 4px;
   padding: 4px;
-  width: 45%;
+  max-width: 45%;
+  width: max-content;
   .messageContainer {
     border-radius: 8px;
     background-color: #f69b76;
     font-size: 18px;
     padding: 0 8px;
+    & > span {
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
   }
   .alignedMessage {
     display: flex;

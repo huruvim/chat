@@ -1,8 +1,8 @@
 import Message from "../Message/Message";
 import s from './MessageList.module.scss';
-import {FC} from "react";
+import {FC, useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
-import { MessageI } from "../../shapes";
+import {MessageI, Nullable} from "../../shapes";
 import {currentUserSelector} from "../../redux/selectors";
 
 interface MessageListProps {
@@ -11,8 +11,18 @@ interface MessageListProps {
 
 const MessageList: FC<MessageListProps> = ({ messages }) => {
   const currentUser = useSelector(currentUserSelector)
+  const messagesRef = useRef<Nullable<HTMLUListElement>>(null);
+  const scrollingRef = useRef(false);
+
+  useEffect(() => {
+    if (messages.length > 0 && !scrollingRef.current) {
+      messagesRef.current?.scrollTo(0, messagesRef.current?.scrollHeight);
+      scrollingRef.current = true;
+    }
+  }, [messages]);
+
   return (
-    <ul className={s.messageList}>
+    <ul className={s.messageList} ref={messagesRef}>
       {messages.map((message, idx, arr) => {
         const isMe = currentUser?.id === message.user.id
         const nextMessage = arr[idx + 1];

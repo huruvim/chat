@@ -11,6 +11,7 @@ interface MessageProps {
 }
 
 const Message: FC<MessageProps> = ({text, authorName, isMe, showAuthor}) => {
+
   return (
     <li className={cn(s.message, {[s.myMessage]: isMe})}>
       <div className={cn(s.messageContainer, {[s.alignedMessage]: isMe})}>
