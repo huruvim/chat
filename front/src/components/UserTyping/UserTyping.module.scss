@@ -1,0 +1,15 @@
+@import "src/assets/styles/variables";
+
+.typing {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 2px;
+  margin: 0 4px 4px 0;
+  .user {
+    border: $darkSea;
+    padding: 2px 12px;
+    background-color: $darkSea;
+    border-radius: 16px;
+  }
+}
