@@ -1,0 +1,37 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
+.general {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  & > :first-child {
+    background-color: $darkSea;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $blue;
+  }
+
+  & > :last-child {
+    height: 40px;
+  }
+
+  & > :nth-child(2) {
+    flex: 1;
+    height: 100%;
+    padding: 40px 0 40px;
+  }
+
+  @include lg {
+    margin: 20px;
+    border-right: 1px solid $darkSea;
+    border-left: 1px solid $darkSea;
+    border-radius: 16px;
+    height: calc(100vh - 40px);
+    & > :first-child {
+      border-radius: 16px 16px 0 0;
+    }
+  }
+}
